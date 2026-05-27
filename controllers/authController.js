@@ -92,3 +92,63 @@ try{
 
     }
 }
+
+//GET CURRENT LOGGED IN USER
+export const getUser =async(req,res)=>{
+try{
+    const {id}=req.param
+    const user = await User.findOne({id:_id})
+    if(!user){
+        return res.status(404).json({
+            success:false,
+            message:"User not found"
+        })
+    }
+    res.status(200).json({
+        success:true,
+        user
+    })
+    console.log(user)
+}catch(error){
+    res.status(500).json({
+        success:false,
+        message:"Error "
+    })
+
+}
+
+
+}
+
+//UPDATE USER
+export const updateUser = async(req,res)=>{
+    try{
+        //remember to validate request body
+const {id}=req.param
+const {name, address}=req.body
+ 
+const user = await User.findOne({id:_id})
+if(!user){
+    return res.status(404).json({
+        success:false,
+        message:"User not found"
+    })
+}
+if(name) user.name = name;
+if(address) user.address = address;
+
+await user.save()
+
+res.status(200).json({
+    success:true,
+    message:"Updated user",
+    data:user
+})
+
+    }catch(error){
+res.status(500).json({
+    success:false,
+    message:"Eroor updating user"
+})
+    }
+}

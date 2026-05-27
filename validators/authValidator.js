@@ -13,6 +13,11 @@ email:Joi.string().email().required(),
 password:Joi.string().min(8).required()
 })
 
+export const editUserSchema =Joi.object({
+    name:Joi.string().min(2).required(),
+    address:Joi.string().allow('', null)
+})
+
 const validate =(Schema)=>(req,res,next)=>{
 const {error} = Schema.validate(req.body,{abortEarly:false})
 if(error)
