@@ -17,10 +17,19 @@ const productModel = new mongoose.Schema({
     },
     category:{
         type:String,
-        required:true
+        required:true,
+        enum:["shoes","bags","clothes"]
+    },
+    sizes:{
+        type:[String],
+        enum:["S","M","L","XL","XXl"]
+    },
+    colours:{
+        type:[String],
+        enum:["Black","White","Red","Blue","Green"]
     },
     stock:{
-        type:Number,
+        type:Number, 
         required:true,
         default:0
     },

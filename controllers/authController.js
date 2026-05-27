@@ -123,7 +123,7 @@ console.log(error)
 //UPDATE USER
 export const updateUser = async(req,res)=>{
     try{
-        //remember to validate request body
+        //lota remember to validate request body
 const {id}=req.params
 const {name, address}=req.body
  
@@ -151,5 +151,41 @@ res.status(500).json({
     message:"Error updating user"
 })
 console.log(error)
+    }
+}
+
+//CHANGE PASSWORD
+export const changePassword = async(req,res)=>{
+    try{
+        const {id}=req.user
+        const {password, newPassword}=req.body
+
+        const user = await User.findOne({_id:id})
+        if(!user){
+            return res.status(404).json({
+                success:false,
+                message:"User does not exist"
+            })
+        }
+         const samePassword = await bcryptjs.compare(password, user.password);
+        if(!samePassword){return res.status(401).json({
+            success:false,
+            message:"Invalid id or password"
+        })
+        }
+        const saltRounds = 10;
+    const hashedPassword = await bcryptjs.hash(newPassword, saltRounds);
+    user.password = hashedPassword
+    await user.save();
+
+    return res.status(200).json({
+        success:true,
+        message:"Password reset successful"
+    })
+    }catch(error){
+return res.status(500).json({
+    success:false,
+    message:"error occured"
+})
     }
 }

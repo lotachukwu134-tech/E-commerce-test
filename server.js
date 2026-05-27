@@ -2,6 +2,7 @@ import express from'express'
 import dotenv from 'dotenv'
 import connectDb from './config/db.js';
 import authRoutes from './routes/authRoute.js';
+import productRoutes from './routes/productRoute.js';
 
 dotenv.config();
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 
 //ROUTES
 app.use(`/auth`, authRoutes)
+app.use(`/product`, productRoutes)
 
 
 

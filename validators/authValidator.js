@@ -18,6 +18,10 @@ export const editUserSchema =Joi.object({
     address:Joi.object().allow(' ', null).optional()
 })
 
+export const changeUserPasswordSchema = Joi.object({
+    password: Joi.string().min(8).required(),
+    newPassword: Joi.string().min(8).required()
+})
 const validate =(Schema)=>(req,res,next)=>{
 const {error} = Schema.validate(req.body,{abortEarly:false})
 if(error)

@@ -1,6 +1,6 @@
 import express from 'express';
-import { getUser, login, register, updateUser } from '../controllers/authController.js';
-import validate, { editUserSchema, loginSchema, registerSchema } from '../validators/authValidator.js';
+import { changePassword, getUser, login, register, updateUser } from '../controllers/authController.js';
+import validate, { changeUserPasswordSchema, editUserSchema, loginSchema, registerSchema } from '../validators/authValidator.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
 
@@ -10,4 +10,5 @@ authRoutes.post(`/register`,validate(registerSchema), register)
 authRoutes.post(`/login`, validate(loginSchema),login)
 authRoutes.get(`/getUser/:id`,authMiddleware, getUser)
 authRoutes.patch(`/update/:id`, validate(editUserSchema),authMiddleware,updateUser)
+authRoutes.put(`/changePassword`, validate(changeUserPasswordSchema),authMiddleware, changePassword)
 export default authRoutes
