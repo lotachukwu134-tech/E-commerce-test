@@ -15,7 +15,7 @@ password:Joi.string().min(8).required()
 
 export const editUserSchema =Joi.object({
     name:Joi.string().min(2).required(),
-    address:Joi.string().allow('', null)
+    address:Joi.object().allow(' ', null).optional()
 })
 
 const validate =(Schema)=>(req,res,next)=>{

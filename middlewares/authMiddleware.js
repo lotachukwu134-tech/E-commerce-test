@@ -6,7 +6,7 @@ const authMiddleware = async(req, res, next)=>{
 try{
     const authHeader = req.headers.authorization || req.headers.Authorization;
     if(!authHeader || !authHeader.startsWith('Bearer')){
-        res.status(401).json({
+      return res.status(401).json({
             success:false,
             message:"token not provided"
         });
@@ -24,7 +24,7 @@ try{
     req.user= user;
     next();
 }catch(error){
-    res.status(401).json({
+     res.status(401).json({
         success:false,
         message:"Invalid or expired token"
     })

@@ -8,6 +8,6 @@ const authRoutes = express.Router()
 
 authRoutes.post(`/register`,validate(registerSchema), register)
 authRoutes.post(`/login`, validate(loginSchema),login)
-authRoutes.get(`/getUser`,authMiddleware, getUser)
-authRoutes.patch(`/edit`, validate(editUserSchema),authMiddleware,updateUser)
+authRoutes.get(`/getUser/:id`,authMiddleware, getUser)
+authRoutes.patch(`/update/:id`, validate(editUserSchema),authMiddleware,updateUser)
 export default authRoutes
