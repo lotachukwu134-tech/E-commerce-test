@@ -1,5 +1,6 @@
 import { Product } from "../models/productModel.js";
 
+//CREATE PRODUCT -ADMIN ONLY
 export const createProduct = async(req, res)=>{
 try{
 const {name, description,price,category,sizes,colours,stock,images}=req.body
@@ -68,7 +69,7 @@ return res.status(500).json({
 // console.log(error)
 // }
 
-//UPDATE USER
+//UPDATE USER -ADMIN ONLY
 export const updateProduct = async(req,res)=>{
     try{
 const product = await product.findById(req.params.id)
@@ -96,3 +97,30 @@ return res.status(500).json({
 })
     }
 }
+
+//DELETE PRODUCT -ADMIN ONLY
+export const deleteProduct = async(req,res)=>{
+    try{
+        const deletePro = await Product.findById(req.params.id)
+        if(!deletePro){
+            return res.status(404).json({
+                success:false,
+                message:"User not found"
+            })
+        }
+        const deletedProduct = await Product.findByIdAndDelete(req.params.id)
+        return res.status(200).json({
+            success:"true",
+            message:"Product deleted successfully"
+        })
+
+    }catch(error){
+        return res.status(500).json({
+            success:false,
+            message:"Error deleting product"
+        })
+
+    }
+}
+
+//FILTER BY CATEGORY
