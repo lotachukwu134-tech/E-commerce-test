@@ -4,8 +4,8 @@ import generateToken from '../utils/generateToken.js'
 
 //REGISTER USER
  export const register = async(req, res)=>{
-const {name, email, password, address}=req.body;
-console.log(req.body);
+const {name, email, password,role, address}=req.body;
+//console.log(req.body);
 
 const userExists = await User.findOne({email})
 
@@ -24,10 +24,12 @@ try{
         name,
         email,
         password:hashedPassword,
+        role,
         address
 
     })
     await newUser.save()
+    console.log(newUser)
 
     const payload ={id:newUser._id, email:newUser.email};
     const token = await generateToken(payload,'1d')
@@ -39,6 +41,7 @@ try{
             id:newUser._id,
             name: newUser.name,
             email: newUser.email,
+            role: newUser.role,
             address: newUser.address
         },
         token
@@ -57,7 +60,7 @@ try{
 //LOGIN USER
  export const login = async(req, res)=>{
     const { email, password}=req.body
-    console.log(req.body)
+    //console.log(req.body)
 
     const existingUser = await User.findOne({email})
     console.log(existingUser)

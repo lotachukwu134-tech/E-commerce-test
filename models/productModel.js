@@ -11,7 +11,7 @@ const productModel = new mongoose.Schema({
         required:true
     },
     price:{
-        type:String,
+        type:Number,
         required:true,
         min:0
     },
@@ -24,7 +24,7 @@ const productModel = new mongoose.Schema({
         type:[String],
         enum:["S","M","L","XL","XXl"]
     },
-    colours:{
+    colour:{
         type:[String],
         enum:["Black","White","Red","Blue","Green"]
     },
