@@ -73,14 +73,14 @@ return res.status(500).json({
 //UPDATE PRODUCT -ADMIN ONLY
 export const updateProduct = async(req,res)=>{
     try{
-const product = await product.findById(req.params.id)
+const product = await Product.findById(req.params.id)
 if(!product)
     return res.status(404).json({
         success:false,
         message:"Product not found"
     })
 
-    const updatedProduct = await product.findByIdAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
         req.params.id,
         {$set:req.body},
         {new:true, runValidators:true}
@@ -88,7 +88,7 @@ if(!product)
     return res.status(200).json({
         success:true,
         message:"product updated successfully",
-        data:updateProduct
+        data:updatedProduct
     })
 
     }catch(error){
@@ -244,7 +244,7 @@ message: "Error occurred while fetching products by category"
    }
 };
 
-
+//GET PRODUCTS
 export const getProducts = async (req, res) => {
  try {
      // APPLYING PAGINATION 
@@ -261,13 +261,13 @@ export const getProducts = async (req, res) => {
      }
 
       // filter by size
-     if (req.query.size) {
-      filter.sizes = req.query.size;
+     if (req.query.sizes) {
+      filter.sizes = req.query.sizes;
      }
 
       // filter by color
-     if (req.query.color) {
-    filter.colors = req.query.color;
+     if (req.query.colour) {
+    filter.colours = req.query.colour;
      }
 
       // filter by price range
