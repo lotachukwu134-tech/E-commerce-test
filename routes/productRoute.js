@@ -9,7 +9,7 @@ const productRoutes = express.Router()
 productRoutes.post(`/createProduct`,authMiddleware,validate(validCreateProduct),adminOnly,createProduct)
 productRoutes.patch(`/update/:id`, authMiddleware,adminOnly,updateProduct)
 productRoutes.delete(`/delete/:id`,authMiddleware,adminOnly,deleteProduct)
-productRoutes.get(`/getProduct`,getProducts)
+productRoutes.get(`/getProducts`,getProducts)
 productRoutes.get(`/getByCategory/:cat`,getProductsByCategory)
 productRoutes.get(`/getSingleProduct/:id`, getSingleProduct)
 

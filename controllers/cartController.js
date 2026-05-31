@@ -1,7 +1,7 @@
 import { Cart } from "../models/cartModel.js";
 import { Product } from "../models/productModel.js";
 
-// Helper: recalculate and save totalPrice
+// recalculate and save totalPrice
 const recalculateTotal = (cart) => {
   cart.totalPrice = cart.items.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -87,7 +87,7 @@ export const addToCart = async (req, res) => {
         ],
       });
     } else {
-      // Cart exists — check if product is already in it
+      // if the Cart exists,check if product is already in it
       const existingItem = cart.items.find(
         (item) => item.product.toString() === productId
       );
