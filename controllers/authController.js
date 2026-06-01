@@ -10,7 +10,7 @@ const {name, email, password,role, address}=req.body;
 const userExists = await User.findOne({email})
 
 if(userExists){
-    res.status(400).json({
+   return res.status(400).json({
         success:false,
         message:`user with this email ${email}already exists `
     })
@@ -97,65 +97,66 @@ try{
 }
 
 //GET CURRENT LOGGED IN USER
-export const getUser =async(req,res)=>{
-try{
-    const {id}=req.params
-    const user = await User.findOne({_id:id})
-    if(!user){
-        return res.status(404).json({
-            success:false,
-            message:"User not found"
-        })
+export const getUser = async (req, res) => {
+  try {
+    // req.user is already attached by authMiddleware — no :id param needed
+    const user = await User.findById(req.user._id).select('-password');
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
     }
+
     return res.status(200).json({
-        success:true,
-        user
-    })
-    console.log(user)
-}catch(error){
+      success: true,
+      user,
+    });
+  } catch (error) {
     return res.status(500).json({
-        success:false,
-        message:"Error fetching User"
-    })
-console.log(error)
-}
-
-
-}
+      success: false,
+      message: 'Error fetching user',
+    });
+  }
+};
 
 //UPDATE USER
-export const updateUser = async(req,res)=>{
-    try{
-        //lota remember to validate request body
-const {id}=req.params
-const {name, address}=req.body
- 
-const user = await User.findOne({_id:id})
-if(!user){
-    return res.status(404).json({
-        success:false,
-        message:"User not found"
-    })
-}
-if(name) user.name = name;
-if(address) user.address = address;
+export const updateUser = async (req, res) => {
+  try {
+    const { name, address } = req.body;
 
-await user.save()
-
-return res.status(200).json({
-    success:true,
-    message:"Updated user",
-    data:user
-})
-console.log(user)
-    }catch(error){
-res.status(500).json({
-    success:false,
-    message:"Error updating user"
-})
-console.log(error)
+    // req.user._id comes from the JWT — users can only update themselves
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
     }
-}
+
+    if (name) user.name = name;
+    if (address) user.address = address;
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Profile updated',
+      data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        address: user.address,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Error updating user',
+    });
+  }
+};
 
 //CHANGE PASSWORD
 export const changePassword = async(req,res)=>{

@@ -8,16 +8,10 @@ const orderRoutes = express.Router();
 // Customer routes
 orderRoutes.post("/", authMiddleware, placeOrder);
 orderRoutes.get("/", authMiddleware, getUserOrders);
+orderRoutes.get("/admin/orders", authMiddleware, adminOnly, getAllOrders);
+orderRoutes.put("/admin/orders/:id/status",authMiddleware,adminOnly,updateOrderStatus);
 orderRoutes.get("/:id", authMiddleware, getSingleOrder);
 orderRoutes.put("/:id/cancel", authMiddleware, cancelOrder);
 
-// Admin routes
-orderRoutes.get("/admin/orders", authMiddleware, adminOnly, getAllOrders);
-orderRoutes.put(
-  "/admin/orders/:id/status",
-  authMiddleware,
-  adminOnly,
-  updateOrderStatus
-);
 
 export default orderRoutes;
