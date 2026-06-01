@@ -29,7 +29,7 @@ try{
 
     })
     await newUser.save()
-    console.log(newUser)
+    //console.log(newUser)
 
     const payload ={id:newUser._id, email:newUser.email};
     const token = await generateToken(payload,'1d')

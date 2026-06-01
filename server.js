@@ -25,13 +25,14 @@ app.use(`/product`, productRoutes)
 app.use(`/cart`, cartRoutes)
 app.use(`/order`, orderRoutes)
 
+app.get(`/`,(req,res)=>{
+    res.json({message:"hello Mom!!"})
+})
+
 app.use(notFound);
 app.use(errorHandle)
 
 
-app.get(`/`,(req,res)=>{
-    res.json({message:"hello Mom!!"})
-})
 connectDb(); 
 app.listen(PORT, ()=>{
     console.log(`server is running on port ${PORT}` )
