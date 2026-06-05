@@ -4,7 +4,7 @@ import generateToken from '../utils/generateToken.js'
 
 //REGISTER USER
  export const register = async(req, res)=>{
-const {name, email, password,role, address}=req.body;
+const {name, email, password, address}=req.body;
 //console.log(req.body);
 
 const userExists = await User.findOne({email})
@@ -12,9 +12,9 @@ const userExists = await User.findOne({email})
 if(userExists){
    return res.status(400).json({
         success:false,
-        message:`user with this email ${email}already exists `
+        message:`user with this email ${email} already exists ` 
     })
-}
+} 
 
 try{
 
@@ -24,7 +24,6 @@ try{
         name,
         email,
         password:hashedPassword,
-        role,
         address
 
     })
@@ -41,7 +40,6 @@ try{
             id:newUser._id,
             name: newUser.name,
             email: newUser.email,
-            role: newUser.role,
             address: newUser.address
         },
         token

@@ -6,13 +6,13 @@ const orderItemSchema = new mongoose.Schema({
     ref: "Product",
   },
   name: {
-    type: String, // snapshot of product name at time of order
+    type: String, 
   },
   quantity: {
     type: Number,
   },
   price: {
-    type: Number, // snapshot of product price at time of order
+    type: Number, 
   },
 });
 
@@ -45,7 +45,7 @@ const orderSchema = new mongoose.Schema(
       default: "unpaid",
     },
     paymentRef: {
-      type: String, // optional: Paystack/Stripe transaction reference
+      type: String, // optional== Paystack/Stripe transaction reference
     },
   },
   { timestamps: true }

@@ -1,5 +1,6 @@
 import { Order } from "../models/orderModel.js";
 import { Cart } from "../models/cartModel.js";
+import { Product } from "../models/productModel.js";
 
 // Place an order from the current cart
 
@@ -22,7 +23,7 @@ export const placeOrder = async (req, res) => {
       product: item.product._id,
       name: item.product.name,
       quantity: item.quantity,
-      price: item.price, // already snapshotted in cart
+      price: item.price, 
     }));
 
     const shippingAddress = req.body.shippingAddress || req.user.address || {};
@@ -47,7 +48,7 @@ export const placeOrder = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: error.message || "Error placing order",
+      message: error.message || "Error placing order", 
     });
   }
 };
@@ -158,7 +159,6 @@ export const getAllOrders = async (req, res) => {
 
     const filter = {};
 
-    // Optional filter by status e.g. ?status=pending
     if (req.query.status) {
       filter.status = req.query.status;
     }
